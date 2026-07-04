@@ -9,7 +9,7 @@ function applyTheme(theme) {
   );
 }
 
-applyTheme(localStorage.getItem("theme") === "dark" ? "dark" : "light");
+applyTheme(localStorage.getItem("theme") === "light" ? "light" : "dark");
 
 themeToggle.addEventListener("click", () => {
   const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
