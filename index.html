@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Air - The Minecraft Server</title>
+  <title>Air</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/x-icon" href="/favicon.png">
-  <link rel="preload" as="image" href="assets/2026-06-22_12.38.05.png">
   <script>
     (function () {
       var theme = localStorage.getItem("theme");
@@ -161,6 +159,39 @@
     <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
     <img class="lightbox-img" src="" alt="">
     <p class="lightbox-caption"></p>
+  </div>
+
+  <div class="assistant-widget" id="assistant-widget">
+    <div id="assistant-panel" class="assistant-panel" hidden>
+      <div class="assistant-header">
+        <p class="assistant-title">Server guide</p>
+        <button type="button" id="assistant-close" class="assistant-close" aria-label="Close chat">&times;</button>
+      </div>
+      <div id="assistant-messages" class="assistant-messages" aria-live="polite"></div>
+      <form id="assistant-form" class="assistant-form">
+        <label class="visually-hidden" for="assistant-input">Ask about the server</label>
+        <input
+          id="assistant-input"
+          type="text"
+          placeholder="Ask about Air or how to join..."
+          autocomplete="off"
+          maxlength="500"
+        >
+        <button type="submit" class="btn btn-primary">Send</button>
+      </form>
+    </div>
+    <button
+      type="button"
+      id="assistant-toggle"
+      class="assistant-toggle"
+      aria-label="Open server guide"
+      aria-controls="assistant-panel"
+      aria-expanded="false"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    </button>
   </div>
 
   <script src="script.js"></script>
