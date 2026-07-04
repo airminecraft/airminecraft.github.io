@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Air</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function () {
+      var theme = localStorage.getItem("theme");
+      document.documentElement.dataset.theme = theme === "dark" ? "dark" : "light";
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">Air</a>
+      <nav class="nav">
+        <a href="#gallery">Gallery</a>
+        <a href="#join">Join</a>
+        <a href="https://discord.gg/CvV2DRJK4b" class="nav-discord" target="_blank" rel="noopener noreferrer">Discord</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark theme">
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="container hero-content">
+        <h1>Air</h1>
+        <p class="hero-tagline">A crossplay server.</p>
+        <p class="hero-sub"></p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-copy="tools-collectables.gl.joinmc.link">
+            Copy Java IP
+          </button>
+          <a href="https://discord.gg/CvV2DRJK4b" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" style="color: var(--discord) !important;">
+            Join the Discord
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about">
+      <div class="container">
+        <h2>About Air (the server)</h2>
+        <div class="about-text">
+          <p>Air is a crossplay server with a variety of different worlds to use.</p>
+          <p>The server has a Survival, Creative, and a PVP arena.</p>
+          <p>All server updates and chat are also in the Discord.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="gallery">
+      <div class="container">
+        <h2>Screenshots from the server.</h2>
+        <p class="section-lead">All photos on this website and in the gallery are screenshots from the server. <small>*excluding the discord*</small></p>
+        <div class="gallery-grid">
+          <figure class="gallery-item gallery-item--wide">
+            <img src="assets/2026-07-03_23.13.13.png" alt="Spawn">
+            <figcaption>A photo of the server spawn area.</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="assets/2026-07-03_23.10.23.png" alt="Lobby">
+            <figcaption>A picture of the lobby.</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="assets/2026-07-03_23.09.03.png" alt="Creative build">
+            <figcaption>A picture of a creative build from GhostbusterDR.</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="assets/2026-07-03_23.16.46.png" alt="Survival base">
+            <figcaption>A picture of a survival base underground.</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="assets/2026-07-03_23.15.56.png" alt="PvP arena">
+            <figcaption>A picture of the PVP Arena when no match is happening.</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="assets/2026-07-03_23-20.png" alt="Discord community">
+            <figcaption>A screenshot of the discord server.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2>Why join the server?</h2>
+        <div class="features-grid">
+          <article class="feature-card">
+            <h3>Have fun.</h3>
+            <p>I mean it is a minecraft server.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Meet people.</h3>
+            <p>With both the discord and the different worlds its pretty easy to meet people.</p>
+          </article>
+          <article class="feature-card">
+            <h3>It's free.</h3>
+            <p>What is there to lose?</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="join" class="join">
+      <div class="container">
+        <h2>How to join.</h2>
+        <p class="section-lead">You can name the server anything you like when adding it.</p>
+
+        <div class="join-cards">
+          <div class="join-card">
+            <span class="join-label">Java Edition</span>
+            <code class="join-ip">tools-collectables.gl.joinmc.link</code>
+            <button class="btn btn-small" data-copy="tools-collectables.gl.joinmc.link">Copy Java IP</button>
+          </div>
+          <div class="join-card">
+            <span class="join-label">Bedrock Edition</span>
+            <code class="join-ip">tools-collectables.gl.at.ply.gg</code>
+            <span class="join-port">Port: <strong>42439</strong></span>
+            <button class="btn btn-small" data-copy="tools-collectables.gl.at.ply.gg">Copy Bedrock IP</button>
+          </div>
+        </div>
+
+        <div class="join-discord">
+          <p>Join the Discord</p>
+          <a href="https://discord.gg/CvV2DRJK4b" class="btn btn-primary" target="_blank" rel="noopener noreferrer" style="color: var(--discord) !important;">
+            Discord
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>This server was made by Air.</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <div id="lightbox" class="lightbox" hidden>
+    <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" src="" alt="">
+    <p class="lightbox-caption"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
