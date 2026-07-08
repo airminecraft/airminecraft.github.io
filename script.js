@@ -98,13 +98,13 @@ How to join:
 Java Edition:
 1. Open Minecraft Java Edition.
 2. Go to Multiplayer, then Add Server or Direct Connect.
-3. Enter the server address: tools-collectables.gl.joinmc.link
+3. Enter the server address: 47.198.17.169
 4. You can name the server anything you like when saving it.
 
 Bedrock Edition:
 1. Open Minecraft Bedrock Edition.
 2. Go to Play, then Servers, then Add Server (or use the Servers tab to add a custom server).
-3. Enter the server address: tools-collectables.gl.at.ply.gg
+3. Enter the server address: 47.198.17.169
 4. Enter port: 42439
 5. Save and connect.
 
