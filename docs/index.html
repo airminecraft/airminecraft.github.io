@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Air Docs</title>
+ 
+  <link rel="icon" type="image/x-icon" href="../favicon.svg">
+  <script>
+    (function () {
+      var theme = localStorage.getItem("theme");
+      document.documentElement.dataset.theme = theme === "light" ? "light" : "dark";
+    })();
+  </script>
+  <style>
+    /* --------------------------
+       BASE CSS & VARIABLES
+       -------------------------- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    @font-face {
+      font-family: 'Minecraft';
+      src: url('../fonts/Minecraft.ttf') format('truetype');
+    }
+
+    :root {
+      --bg-page: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-elevated: #eef1f5;
+      --grass: #000000;
+      --grass-light: #000000;
+      --grass-shadow: #333333;
+      --grass-contrast: #ffffff;
+      --stone: #8b949e;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --border: #d0d7de;
+      --header-bg: rgba(246, 248, 250, 0.85);
+      --discord: #5865f2;
+      --font-display: "Minecraft", monospace;
+      --font-body: "Minecraft", sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg-page: #0d1117;
+      --bg-card: #161b22;
+      --bg-elevated: #1c2128;
+      --grass: #ffffff;
+      --grass-light: #ffffff;
+      --grass-shadow: #cccccc;
+      --grass-contrast: #000000;
+      --stone: #6b7280;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --border: #30363d;
+      --header-bg: rgba(13, 17, 23, 0.85);
+    }
+
+    html, body {
+      height: 100%;
+      scroll-behavior: smooth;
+      font-family: var(--font-body);
+      background: var(--bg-page);
+      color: var(--text);
+      overflow: hidden;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    button, input {
+      font-family: inherit;
+    }
+
+    /* --------------------------
+       HEADER NAV
+       -------------------------- */
+    .site-header {
+      position: relative;
+      z-index: 100;
+      background: var(--header-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      height: 60px;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      height: 100%;
+      width: 100%;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--grass-light);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav a:hover, .nav a.active {
+      color: var(--text);
+    }
+
+    .nav-discord {
+      color: var(--discord) !important;
+    }
+
+    .btn-share {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-elevated);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-share:hover {
+      color: var(--text);
+      border-color: var(--stone);
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-elevated);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { color: var(--text); border-color: var(--stone); }
+    .theme-toggle .icon-moon { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+
+    /* --------------------------
+       FULL WIKI LAYOUT
+       -------------------------- */
+    .docs-layout {
+      display: flex;
+      height: calc(100vh - 60px);
+      width: 100vw;
+    }
+
+    /* Far-Left Sidebar Navigation */
+    .docs-sidebar {
+      width: 300px;
+      min-width: 300px;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1rem;
+      height: 100%;
+      z-index: 10;
+    }
+
+    .sidebar-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    .docs-search {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-page);
+      color: var(--text);
+      font-size: 0.85rem;
+    }
+    .docs-search:focus {
+      outline: 2px solid var(--grass-light);
+      outline-offset: -1px;
+    }
+
+    .docs-list {
+      list-style: none;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding-right: 0.25rem;
+    }
+
+    /* Scrollbars */
+    .docs-list::-webkit-scrollbar { width: 5px; }
+    .docs-list::-webkit-scrollbar-track { background: transparent; }
+    .docs-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    
+    .docs-link {
+      width: 100%;
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .docs-link:hover {
+      background: var(--bg-elevated);
+      color: var(--text);
+    }
+    
+    .docs-link.active {
+      background: var(--bg-elevated);
+      color: var(--text);
+      font-weight: bold;
+      border-left: 3px solid var(--text);
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* Main Doc Space Viewer */
+    .docs-viewer {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-page);
+      position: relative;
+    }
+
+    .docs-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: transparent;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .docs-layout {
+        flex-direction: column;
+      }
+      .docs-sidebar {
+        width: 100%;
+        min-width: 100%;
+        height: 35vh;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .docs-viewer {
+        height: 65vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">Air</a>
+      <nav class="nav">
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="active">Docs</a>
+        <a href="https://discord.gg/CvV2DRJK4b" class="nav-discord" target="_blank" rel="noopener noreferrer">Discord</a>
+        <button id="share-btn" class="btn-share" type="button" aria-label="Share document link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          <span id="share-text">Share</span>
+        </button>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch theme">
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="docs-layout">
+    <!-- FAR-LEFT NAVIGATION SIDEBAR -->
+    <aside class="docs-sidebar">
+      <h2 class="sidebar-title">Air Docs</h2>
+      <input 
+        type="text" 
+        id="docs-search" 
+        class="docs-search" 
+        placeholder="Search documents..." 
+        autocomplete="off"
+      >
+      <ul id="docs-list" class="docs-list" aria-label="Documentation pages"></ul>
+    </aside>
+
+    <!-- FULL DOC VIEWER AREA -->
+    <section class="docs-viewer">
+      <iframe id="docs-iframe" class="docs-iframe" title="Air docs viewer"></iframe>
+    </section>
+  </main>
+
+  <script>
+    // Note: welcome.html is excluded from sidebar list, but defined as default page
+    const DEFAULT_PAGE = "welcome.html";
+
+    const docsPages = [
+      { title: "Austindao230", file: "austindao230.html" },
+      { title: "Basic server commands", file: "basic-server-commands.html" },
+      { title: "Doodlehoney2018", file: "doodlehoney2018.html" },
+      { title: "GhostbusterDR", file: "ghostbusterdr.html" },
+      { title: "How to craft orbital strikes", file: "how-to-craft-and-use-orbital-strike-cannons.html" },
+      { title: "Island event", file: "island-event.html" },
+      { title: "Island gameshow wheel", file: "island-gameshow-wheel.html" },
+      { title: "Island rank", file: "island-rank.html" },
+      { title: "Marco", file: "marco.html" },
+      { title: "Server mods", file: "server-mods.html" },
+      { title: "Sky event", file: "sky-event.html" },
+      { title: "TheFinnyShow", file: "thefinnyshow.html" },
+      { title: "Water bottle", file: "water-bottle.html" },
+      { title: "Wormhole exploits", file: "wormhole-exploits.html" },
+    ];
+
+    const docsList = document.getElementById("docs-list");
+    const docsIframe = document.getElementById("docs-iframe");
+    const searchInput = document.getElementById("docs-search");
+    const themeBtn = document.getElementById('theme-toggle');
+    const shareBtn = document.getElementById('share-btn');
+    const shareText = document.getElementById('share-text');
+
+    let currentFile = DEFAULT_PAGE;
+
+    // Update parent theme and sync iframe content
+    function setTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      localStorage.setItem('theme', theme);
+      syncThemeToIframe();
+    }
+
+    // Synchronize current parent theme into the Obsidian document inside iframe
+    function syncThemeToIframe() {
+      try {
+        const iframeDoc = docsIframe.contentDocument || docsIframe.contentWindow.document;
+        if (!iframeDoc || !iframeDoc.body) return;
+
+        const isDark = document.documentElement.dataset.theme === 'dark';
+        if (isDark) {
+          iframeDoc.body.classList.add("theme-dark");
+          iframeDoc.body.classList.remove("theme-light");
+        } else {
+          iframeDoc.body.classList.add("theme-light");
+          iframeDoc.body.classList.remove("theme-dark");
+        }
+      } catch (e) {
+        // Cross-origin fallback safety check
+      }
+    }
+
+    // Toggle parent theme manually
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.dataset.theme;
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Listen for theme changes coming from WITHIN the iframe page (e.g. Obsidian toggle checkbox)
+    function listenIframeThemeToggle() {
+      try {
+        const iframeWin = docsIframe.contentWindow;
+        const iframeDoc = docsIframe.contentDocument || iframeWin.document;
+
+        if (!iframeDoc) return;
+
+        // Sync main theme whenever iframe document fully loads
+        syncThemeToIframe();
+
+        // Listen for internal theme checkbox toggles inside obsidian document
+        const internalToggle = iframeDoc.getElementById('theme-toggle-input');
+        if (internalToggle) {
+          internalToggle.addEventListener('change', (e) => {
+            const isDark = iframeDoc.body.classList.contains('theme-dark');
+            setTheme(isDark ? 'light' : 'dark');
+          });
+        }
+
+        // Observe class changes on iframe <body> to detect internal script theme updates
+        const observer = new MutationObserver(() => {
+          if (iframeDoc.body.classList.contains('theme-dark') && document.documentElement.dataset.theme !== 'dark') {
+            setTheme('dark');
+          } else if (iframeDoc.body.classList.contains('theme-light') && document.documentElement.dataset.theme !== 'light') {
+            setTheme('light');
+          }
+        });
+
+        observer.observe(iframeDoc.body, { attributes: true, attributeFilter: ['class'] });
+
+      } catch (e) {
+        // Handle cross-origin restrictions if serving externally
+      }
+    }
+
+    docsIframe.addEventListener('load', listenIframeThemeToggle);
+
+    function updateActiveLink(filename) {
+      document.querySelectorAll(".docs-link").forEach((button) => {
+        button.classList.toggle("active", button.dataset.file === filename);
+      });
+    }
+
+    function loadDocsPage(filename, updateHash = true) {
+      currentFile = filename;
+      docsIframe.src = filename;
+      updateActiveLink(filename);
+
+      if (updateHash) {
+        // Update URL hash without breaking history back-button
+        if (filename === DEFAULT_PAGE) {
+          history.replaceState(null, "", window.location.pathname);
+        } else {
+          window.location.hash = filename;
+        }
+      }
+    }
+
+    // Populate Sidebar Pages
+    docsPages.forEach((page) => {
+      const listItem = document.createElement("li");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "docs-link";
+      button.textContent = page.title;
+      button.dataset.file = page.file;
+      
+      button.addEventListener("click", () => loadDocsPage(page.file));
+      
+      listItem.appendChild(button);
+      docsList.appendChild(listItem);
+    });
+
+    // Check URL hash on page load to restore active page or fallback to welcome.html
+    function initPageFromUrl() {
+      const hashFile = window.location.hash.replace("#", "");
+      if (hashFile && (hashFile === DEFAULT_PAGE || docsPages.some(p => p.file === hashFile))) {
+        loadDocsPage(hashFile, false);
+      } else {
+        loadDocsPage(DEFAULT_PAGE, false);
+      }
+    }
+
+    // Handle back/forward browser navigation
+    window.addEventListener("hashchange", () => {
+      const hashFile = window.location.hash.replace("#", "") || DEFAULT_PAGE;
+      if (hashFile !== currentFile) {
+        loadDocsPage(hashFile, false);
+      }
+    });
+
+    // Share Button Click Handler
+    shareBtn.addEventListener("click", async () => {
+      const shareUrl = window.location.origin + window.location.pathname + (currentFile === DEFAULT_PAGE ? "" : "#" + currentFile);
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        shareText.textContent = "Copied!";
+        setTimeout(() => {
+          shareText.textContent = "Share";
+        }, 2000);
+      } catch (err) {
+        // Fallback prompt for clipboard restrictions
+        prompt("Copy page link:", shareUrl);
+      }
+    });
+
+    // Search Filtering Functionality
+    searchInput.addEventListener("input", (e) => {
+      const filterTerm = e.target.value.toLowerCase();
+      const listItems = docsList.querySelectorAll("li");
+
+      listItems.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(filterTerm) ? "" : "none";
+      });
+    });
+
+    // Initialize page
+    initPageFromUrl();
+  </script>
+</body>
+</html>
