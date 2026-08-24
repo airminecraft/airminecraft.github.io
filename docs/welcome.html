@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome - Air Docs</title>
+  <style>
+    @font-face {
+      font-family: 'Minecraft';
+      src: url('../fonts/Minecraft.ttf') format('truetype');
+    }
+
+    :root {
+      --bg-page: #f6f8fa;
+      --bg-card: #ffffff;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --border: #d0d7de;
+      --font-display: "Minecraft", monospace;
+      --font-body: "Minecraft", sans-serif;
+    }
+
+    /* Synchronize with parent theme classes */
+    body.theme-dark {
+      --bg-page: #0d1117;
+      --bg-card: #161b22;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --border: #30363d;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text);
+      font-family: var(--font-body);
+      margin: 0;
+      padding: 3rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .welcome-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3rem 2.5rem;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .welcome-title {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      margin-top: 0;
+      margin-bottom: 1.25rem;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .welcome-text {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body class="theme-dark">
+  <main class="welcome-card">
+    <h1 class="welcome-title">Welcome to Air Docs</h1>
+    <p class="welcome-text">
+      This is the Air Docs website. This contains players, tutorials, and more.
+    </p>
+  </main>
+</body>
+</html>
